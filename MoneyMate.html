@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MoneyMate</title>
+    <link rel="stylesheet" href="MoneyMate.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="MoneyMate.js" defer></script>
+</head>
+
+<body>
+<title>Restraunt</title>
+    <nav class="navbar">
+    <div class="navbar-container container">
+
+        <div class="hamburger-lines">
+            <span class="line line1"></span>
+            <span class="line line2"></span>
+            <span class="line line3"></span>
+        </div>
+        <ul class="menu-items">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#calculate">Calculate</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <h1 class="logo">MoneyMate</h1>
+    </div>
+</nav>
+    <section class="showcase-area" id="showcase">
+    <div class="showcase-container">
+        <h1 class="main-title" id="home">Finance Manager</h1>
+        <p>track, organize,and manage your money in one place.</p>
+        <a href="#about" class="btn btn-primary">get started</a>
+    </div>
+    </section>
+
+
+  <section id="about" class="about-section">
+    <div class="container">
+
+      <!-- Header -->
+      <div class="section-header">
+        <h1>
+          Master Cleanse Reliac Heirloom
+        </h1>
+        <p>
+          Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical
+          gentrify, subway tile poke farm-to-table. Franzen you probably
+          haven't heard of them man bun deep jianbing selfies heirloom prism
+          food truck ugh squid celiac humblebrag.
+        </p>
+      </div>
+    </section>
+    <section id="features"class="features-section">
+      <!-- Feature Grid -->
+      <div class="features-grid">
+
+        <!-- Left Column -->
+        <div class="column">
+          <div class="feature-card">
+            <h3>Shooting Stars</h3>
+            <p>Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
+            <a href="#">Learn More →</a>
+          </div>
+
+          <div class="feature-card">
+            <h3>Neptune</h3>
+            <p>Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
+            <a href="#">Learn More →</a>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="column">
+          <div class="feature-card">
+            <h3>The Catalyzer</h3>
+            <p>Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
+            <a href="#">Learn More →</a>
+          </div>
+
+          <div class="feature-card">
+            <h3>Melanchole</h3>
+            <p>Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
+            <a href="#">Learn More →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+        <section id="calculate">
+        <div class="action-buttons">
+          <button id="exportPdfBtn" class="btn btn-outline">📄 Download PDF</button>
+          <button id="resetBtn" class="btn btn-danger">♻ Reset</button>
+        </div>
+
+     
+       <div class="main-grid">  
+        
+          <div class="left-box">
+            <div class="expense-container">
+            <h2>Expense Tracker</h2>
+           <form id="formValue">  
+                <label>Expense Name</label> 
+                <input type="text" id="expenseName" class="input"/> 
+                <p id="nameError" class="error"></p>
+
+                <label class="label">Amount</label>
+                <input type="number" id="expenseAmount" class="input"/>  
+                <p id="amountError" class="error"></p>
+
+                <label class="label">Date</label>
+                <input type="date" id="expenseDate" class="input" />
+                <p id="dateError" class="error"></p>
+
+                <label class="label">Category</label>
+                <select id="expenseCategory" class="input">
+                   <option value="">Select Type</option>
+                   <option value="Expense">Expense</option>
+                   <option value="Income">Income</option>
+                </select>
+                <p id="categoryError" class="error"></p>
+                <button id="AddExpenseButton" class="btn btn-primary">➕ Add Expense</button>
+              
+           </form>
+           
+           
+             
+         </div> 
+           <div class="search-box">
+               
+                <label >Search Expenses</label>
+               <input type="search" id="searchInput" class="search_input" placeholder="Type name or category...">
+               
+               
+           </div>
+        
+        </div>
+        <div class="right-box">
+          <div id="exportSection">
+              <div class="summary-box">
+              <h1>Summary</h1>
+            <div class="row-alignment">
+               <h4 id="totalExpense" class="amount-red">Expenses: ₹ 0</h4>
+               <h4 id="totalBalance" class="amount-black">Balance: ₹ 0</h4>
+               <h4 id="totalIncome" class="amount-green">Income: ₹ 0</h4>
+            </div>
+          </div>
+          <select id="sortSelect" class="input">
+           <option value="">Sort By</option>
+            <option value="date-new">Date: Newest First</option>
+            <option value="date-old">Date: Oldest First</option>
+            <option value="amount-high">Amount: High to Low</option>
+            <option value="amount-low">Amount: Low to High</option>
+          </select>
+
+           <div class="expense-list-box">
+
+            <h3>Expense List</h3> 
+             
+
+            <div id="expenseContainer"></div> 
+          </div>
+          </div>
+             
+      </div> 
+        </div>
+       <script src="MoneyMate.js"></script>
+    </section>
+    <section id="contact">
+    <div class="contact-container container">
+        <div class="form-container">
+        <h2>Contact Us</h2>
+        <textarea cols="30" rows="6"></textarea>
+        <a href="#" class="btn btn-primary">Submit</a>
+        </div>
+    </div>
+  </section>
+  <footer id="footer">
+    <h2>MoneyMate &copy; all rights reserved</h2>
+  </footer>
+</body>
+</html>
