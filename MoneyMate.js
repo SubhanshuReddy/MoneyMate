@@ -197,7 +197,8 @@ function updateTotal(){
     let balance = totalIncome-totalExpense;
     totalBalanceValue.textContent="Balance: ₹ "+balance;
     totalIncomeValue.textContent="Income: ₹ "  +totalIncome
-    totalAmountValue.textContent= "Expenses: ₹ " + totalExpense;
+    totalAmountValue.textContent = "Expenses: ₹ " + totalExpense;
+    updateAnalysis(totalIncome, totalExpense);
 } 
 
 //Display the expense list in the web page
@@ -300,3 +301,117 @@ $(document).ready(function () {
   }
 
 });
+//
+function updateAnalysis(totalIncome, totalExpense) {
+    const savings = totalIncome - totalExpense;
+
+    const savingsText = document.getElementById("savingsAnalysis");
+    savingsText.textContent = "Savings: ₹ " + savings;
+
+    savingsText.className = "";
+    if (totalIncome > 0) {
+        const savingRate = (savings / totalIncome) * 100;
+        if (savingRate >= 20) savingsText.classList.add("good");
+        else if (savingRate >= 10) savingsText.classList.add("warning");
+        else savingsText.classList.add("danger");
+    }
+
+    findHighestExpense();
+    calculateDailyAverage();
+}
+function findHighestExpense() {
+    let maxExpense = 0;
+    let expenseName = "";
+
+    for (let item of expenseList) {
+        if (item.category === "Expense" && item.amount > maxExpense) {
+            maxExpense = item.amount;
+            expenseName = item.name;
+        }
+    }
+
+    const el = document.getElementById("highestExpenseAnalysis");
+
+    if (maxExpense > 0) {
+        el.textContent = `Highest Expense: ₹ ${maxExpense} (${expenseName})`;
+        el.className = "danger-text";
+    } else {
+        el.textContent = "Highest Expense: ₹ 0";
+        el.className = "";
+    }
+}
+
+function calculateDailyAverage() {
+    let total = 0;
+    let dateSet = new Set();
+
+    for (let item of expenseList) {
+        if (item.category === "Expense") {
+            total += item.amount;
+            dateSet.add(item.date);
+        }
+    }
+
+    const dailyAvg =
+        dateSet.size > 0 ? Math.round(total / dateSet.size) : 0;
+
+    const el = document.getElementById("dailyAverageAnalysis");
+
+    el.textContent = "Daily Avg: ₹ " + dailyAvg;
+    el.className = dailyAvg > 500 ? "warning-text" : "safe-text";
+}
+//                     Monthly comparision
+function monthlyComparison() {
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+
+    let thisMonthTotal = 0;
+    let lastMonthTotal = 0;
+
+    for (let item of expenseList) {
+        if (item.category !== "Expense") continue;
+
+        const itemDate = new Date(item.date);
+        const itemMonth = itemDate.getMonth();
+        const itemYear = itemDate.getFullYear();
+
+        // This month
+        if (itemMonth === currentMonth && itemYear === currentYear) {
+            thisMonthTotal += item.amount;
+        }
+
+        // Previous month (handles year change)
+        if (
+            (itemMonth === currentMonth - 1 && itemYear === currentYear) ||
+            (currentMonth === 0 && itemMonth === 11 && itemYear === currentYear - 1)
+        ) {
+            lastMonthTotal += item.amount;
+        }
+    }
+
+    const compareEl = document.getElementById("monthlyCompare");
+
+    if (thisMonthTotal === 0 && lastMonthTotal === 0) {
+        compareEl.textContent = "No monthly data available";
+        compareEl.className = "neutral";
+        return;
+    }
+
+    const diff = thisMonthTotal - lastMonthTotal;
+
+    if (diff > 0) {
+        compareEl.textContent =
+          `📈 Spending increased by ₹ ${diff} compared to last month`;
+        compareEl.className = "increase";
+    } 
+    else if (diff < 0) {
+        compareEl.textContent =
+          `📉 Spending decreased by ₹ ${Math.abs(diff)} compared to last month`;
+        compareEl.className = "decrease";
+    } 
+    else {
+        compareEl.textContent = "➖ Spending unchanged from last month";
+        compareEl.className = "neutral";
+    }
+}
