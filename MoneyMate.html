@@ -12,7 +12,7 @@
 </head>
 
 <body>
-<title>Restraunt</title>
+<title>MoneyMate</title>
     <nav class="navbar">
     <div class="navbar-container container">
 
@@ -33,8 +33,8 @@
 </nav>
     <section class="showcase-area" id="showcase">
     <div class="showcase-container">
-        <h1 class="main-title" id="home">Finance Manager</h1>
-        <p>track, organize,and manage your money in one place.</p>
+        <h1 class="main-title" id="home">Money Mate</h1>
+        <p>“Track expenses. Understand spending. Improve savings.”</p>
         <a href="#about" class="btn btn-primary">get started</a>
     </div>
     </section>
@@ -46,13 +46,10 @@
       <!-- Header -->
       <div class="section-header">
         <h1>
-          Master Cleanse Reliac Heirloom
+        Personal Finance Manager
         </h1>
         <p>
-          Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical
-          gentrify, subway tile poke farm-to-table. Franzen you probably
-          haven't heard of them man bun deep jianbing selfies heirloom prism
-          food truck ugh squid celiac humblebrag.
+This Expense Tracker helps users record, analyze, and manage their income and expenses in real time. It provides clear financial insights such as savings analysis, daily averages, and monthly comparisons, all while keeping data private and stored locally in the browser.
         </p>
       </div>
     </section>
@@ -60,35 +57,61 @@
       <!-- Feature Grid -->
       <div class="features-grid">
 
+        
         <!-- Left Column -->
         <div class="column">
           <div class="feature-card">
-            <h3>Shooting Stars</h3>
-            <p>Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
-            <a href="#">Learn More →</a>
+            <h3>📊 Smart Expense Tracking</h3>
+            <p>Easily add, edit, and delete income or expenses with category and date support. All records are saved securely in your browser.
           </div>
 
           <div class="feature-card">
-            <h3>Neptune</h3>
-            <p>Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
-            <a href="#">Learn More →</a>
+            <h3>💰 Real-Time Balance Calculation</h3>
+            <p>Automatically calculates Total Income, Total Expenses, and Current Balance as soon as data is updated.
           </div>
         </div>
-
-        <!-- Right Column -->
         <div class="column">
           <div class="feature-card">
-            <h3>The Catalyzer</h3>
-            <p>Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
-            <a href="#">Learn More →</a>
+            <h3>🔍 Instant Search & Sorting</h3>
+            <p>
+Quickly search expenses by name or category and sort them by date or amount for better analysis.
           </div>
 
           <div class="feature-card">
-            <h3>Melanchole</h3>
-            <p>Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
-            <a href="#">Learn More →</a>
+            <h3>📅 Daily Average Spending</h3>
+            <p>
+Shows your average daily expense, helping you control unnecessary spending habits.
           </div>
         </div>
+
+         <!-- Right Column -->
+        <div class="column">
+          <div class="feature-card">
+            <h3>💾 Persistent Data Storage</h3>
+            <p>
+All data is stored using Local Storage, so your expenses remain saved even after page refresh.
+          </div>
+
+          <div class="feature-card">
+            <h3>📈 Monthly Spending Comparison</h3>
+            <p>Compare current month expenses with the previous month to track spending increase or decrease trends.
+          </div>
+        </div>
+        <div class="column">
+          <div class="feature-card">
+            <h3>📄 Export Expense Report </h3>
+            <p>
+Download your expense summary as a PDF report for offline use or sharing.
+          </div>
+
+          <div class="feature-card">
+            <h3>🧠 Savings Analysis Indicator</h3>
+            <p>
+Visually indicates whether your savings are good, average, or poor based on income-to-expense ratio.
+          </div>
+        </div>
+
+       
 
       </div>
     </div>
@@ -167,8 +190,16 @@
             <div id="expenseContainer"></div> 
           </div>
           </div>
+             <hr>
+
              
+
       </div> 
+                   <p id="savingsAnalysis">Savings: ₹ 0</p>
+             <p id="highestExpenseAnalysis">Highest Expense: ₹ 0</p>
+             <p id="dailyAverageAnalysis">Daily Avg: ₹ 0</p>
+             <p id="monthlyCompare">Monthly comparison will appear here</p>
+
         </div>
        <script src="MoneyMate.js"></script>
     </section>
