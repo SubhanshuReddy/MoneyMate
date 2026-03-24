@@ -1,4 +1,5 @@
 let expenseList = [];
+let chartInstance = null;
 let count = 0;
 let editingId = null;
 //Dom GetElements
@@ -12,7 +13,6 @@ let totalBalanceValue = document.getElementById("totalBalance");
 let totalIncomeValue = document.getElementById("totalIncome")
 let savedData = localStorage.getItem("expenses"); 
 let searchInput = document.getElementById("searchInput"); 
-let darkModeSwitch = document.getElementById("darkModeSwitch"); 
 let dateInput = document.getElementById("expenseDate"); 
 let resetButton = document.getElementById("resetBtn");
 let exportBtn = document.getElementById("exportPdfBtn");
@@ -150,13 +150,13 @@ addButton.addEventListener("click",function(){
         for(let i=0;i<expenseList.length;i++){
             if(expenseList[i].id ===editingId){
                 expenseList[i].name = nameValue;
-                expenseList[i].amount = parseInt(amountValue);
+                expenseList[i].amount =parseFloat(amountValue);
                 expenseList[i].category = categoryValue;
                 expenseList[i].date =dateValue
             }
         }
         editingId=null 
-        addButton.textContent="Add Expenses"
+        addButton.textContent="➕ Add Expense"
     } 
     //Append the object value in the expense list
     else{
@@ -164,7 +164,7 @@ addButton.addEventListener("click",function(){
     let object = {
         id:count,
         name:nameValue,
-        amount:parseInt(amountValue),
+        amount:parseFloat(amountValue),
         category:categoryValue,
         date:dateValue
     } 
@@ -182,24 +182,6 @@ addButton.addEventListener("click",function(){
     updateTotal()
 })
 
-//update the Income , Expense,Balcnce function
-function updateTotal(){
-    let totalIncome=0;
-    let totalExpense =0 ;
-    for (let i=0;i<expenseList.length;i++){
-        let item = expenseList[i]
-        if (item.category ==="Income"){
-            totalIncome += item.amount;
-        }else{
-            totalExpense += item.amount;
-        }
-    } 
-    let balance = totalIncome-totalExpense;
-    totalBalanceValue.textContent="Balance: ₹ "+balance;
-    totalIncomeValue.textContent="Income: ₹ "  +totalIncome
-    totalAmountValue.textContent = "Expenses: ₹ " + totalExpense;
-    updateAnalysis(totalIncome, totalExpense);
-} 
 
 //Display the expense list in the web page
 function displayExpenses(filter=""){
@@ -279,16 +261,19 @@ function deleteExpenses(id){
     updateTotal();
     
 }
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function () {
+window.addEventListener("scroll", function () {
+    document.querySelector(".navbar")
+        ?.classList.toggle("sticky", window.scrollY > 50);
+});
 
-  // Sticky header on scroll
-  $(window).scroll(function () {
-    if ($(this).scrollTop() > 50) {
-      $("header").addClass("sticky");
-    } else {
-      $("header").removeClass("sticky");
+    const autoDate = document.getElementById("autodate");
+    if (autoDate) {
+        autoDate.innerHTML = new Date().getFullYear();
     }
-  });
+});
+
+
 
   // Set current year automatically
   function newDate() {
@@ -300,7 +285,7 @@ $(document).ready(function () {
     autoDate.innerHTML = newDate();
   }
 
-});
+;
 //
 function updateAnalysis(totalIncome, totalExpense) {
     const savings = totalIncome - totalExpense;
@@ -312,8 +297,8 @@ function updateAnalysis(totalIncome, totalExpense) {
     if (totalIncome > 0) {
         const savingRate = (savings / totalIncome) * 100;
         if (savingRate >= 20) savingsText.classList.add("good");
-        else if (savingRate >= 10) savingsText.classList.add("warning");
-        else savingsText.classList.add("danger");
+        else if (savingRate >= 10) savingsText.classList.add("warning-text");
+        else savingsText.classList.add("danger-text");
     }
 
     findHighestExpense();
@@ -346,7 +331,7 @@ function calculateDailyAverage() {
     let dateSet = new Set();
 
     for (let item of expenseList) {
-        if (item.category === "Expense") {
+        if (item.category !== "Income") {
             total += item.amount;
             dateSet.add(item.date);
         }
@@ -360,58 +345,126 @@ function calculateDailyAverage() {
     el.textContent = "Daily Avg: ₹ " + dailyAvg;
     el.className = dailyAvg > 500 ? "warning-text" : "safe-text";
 }
-//                     Monthly comparision
-function monthlyComparison() {
-    const now = new Date();
-    const currentMonth = now.getMonth();
-    const currentYear = now.getFullYear();
+//Chart
+function renderChart(totalIncome, totalExpense) {
+    const ctx = document.getElementById("financeChart").getContext("2d");
 
-    let thisMonthTotal = 0;
-    let lastMonthTotal = 0;
+    // Destroy old chart before creating new one
+    if (chartInstance) {
+        chartInstance.destroy();
+    }
+
+    chartInstance = new Chart(ctx, {
+        type: "doughnut",
+        data: {
+            labels: ["Income", "Expense"],
+            datasets: [{
+                data: [totalIncome, totalExpense],
+                backgroundColor: ["#16a34a", "#dc2626"],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: "bottom"
+                }
+            }
+        }
+    });
+}
+function updateTotal(){
+    let totalIncome=0;
+    let totalExpense =0 ;
+
+    for (let i=0;i<expenseList.length;i++){
+        let item = expenseList[i]
+        if (item.category ==="Income"){
+            totalIncome += item.amount;
+        }else{
+            totalExpense += item.amount;
+        }
+    } 
+
+    let balance = totalIncome-totalExpense;
+
+    totalBalanceValue.textContent="Balance: ₹ "+balance;
+    totalIncomeValue.textContent="Income: ₹ "  +totalIncome
+    totalAmountValue.textContent = "Expenses: ₹ " + totalExpense;
+
+updateAnalysis(totalIncome, totalExpense);
+renderChart(totalIncome, totalExpense);
+renderCategoryChart(); 
+}
+function renderCategoryChart() {
+    const ctx = document.getElementById("categoryChart").getContext("2d");
+
+    let categoryMap = {};
 
     for (let item of expenseList) {
-        if (item.category !== "Expense") continue;
+        if (item.category !== "Income") {
+            let category = item.category.trim(); // ✅ fix spacing issues
 
-        const itemDate = new Date(item.date);
-        const itemMonth = itemDate.getMonth();
-        const itemYear = itemDate.getFullYear();
+            if (!categoryMap[category]) {
+                categoryMap[category] = 0;
+            }
 
-        // This month
-        if (itemMonth === currentMonth && itemYear === currentYear) {
-            thisMonthTotal += item.amount;
-        }
-
-        // Previous month (handles year change)
-        if (
-            (itemMonth === currentMonth - 1 && itemYear === currentYear) ||
-            (currentMonth === 0 && itemMonth === 11 && itemYear === currentYear - 1)
-        ) {
-            lastMonthTotal += item.amount;
+            categoryMap[category] += item.amount;
         }
     }
 
-    const compareEl = document.getElementById("monthlyCompare");
+    console.log(categoryMap); // 👈 DEBUG
 
-    if (thisMonthTotal === 0 && lastMonthTotal === 0) {
-        compareEl.textContent = "No monthly data available";
-        compareEl.className = "neutral";
-        return;
+    const labels = Object.keys(categoryMap);
+    const data = Object.values(categoryMap);
+
+    if (window.categoryChartInstance) {
+        window.categoryChartInstance.destroy();
     }
 
-    const diff = thisMonthTotal - lastMonthTotal;
-
-    if (diff > 0) {
-        compareEl.textContent =
-          `📈 Spending increased by ₹ ${diff} compared to last month`;
-        compareEl.className = "increase";
-    } 
-    else if (diff < 0) {
-        compareEl.textContent =
-          `📉 Spending decreased by ₹ ${Math.abs(diff)} compared to last month`;
-        compareEl.className = "decrease";
-    } 
-    else {
-        compareEl.textContent = "➖ Spending unchanged from last month";
-        compareEl.className = "neutral";
+    window.categoryChartInstance = new Chart(ctx, {
+        type: "pie",
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: [
+                    "#ef4444",
+                    "#f59e0b",
+                    "#10b981",
+                    "#3b82f6",
+                    "#8b5cf6",
+                    "#ec4899"
+                ]
+            }]
+        },
+        
+options: {
+    responsive: true,
+    plugins: {
+        legend: {
+            position: "bottom",
+            labels: {
+                font: {
+                    size: 26   // 🔥 increase this (try 14–18)
+                },
+                padding: 20
+            }
+        }
     }
 }
+
+    });
+}
+function filterByMonth(month) {
+    return expenseList.filter(item => item.date.startsWith(month));
+}
+if (totalExpense > budget) {
+    alert("⚠ Budget exceeded!");
+}
+formValue.addEventListener("keypress", function(e){
+    if (e.key === "Enter") {
+        addButton.click();
+    }
+});
