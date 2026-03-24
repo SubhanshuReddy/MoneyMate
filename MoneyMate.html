@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>MoneyMate</title>
-    <link rel="stylesheet" href="MoneyMate.css">
+    <link rel="stylesheet" href="MoneyMate1.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="MoneyMate.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="MoneyMate1.js" defer></script>
 </head>
 
 <body>
@@ -97,7 +98,7 @@ All data is stored using Local Storage, so your expenses remain saved even after
             <p>Compare current month expenses with the previous month to track spending increase or decrease trends.
           </div>
         </div>
-        <div class="column">
+<div class="column">
           <div class="feature-card">
             <h3>📄 Export Expense Report </h3>
             <p>
@@ -116,13 +117,14 @@ Visually indicates whether your savings are good, average, or poor based on inco
       </div>
     </div>
   </section>
-        <section id="calculate">
-        <div class="action-buttons">
-          <button id="exportPdfBtn" class="btn btn-outline">📄 Download PDF</button>
-          <button id="resetBtn" class="btn btn-danger">♻ Reset</button>
-        </div>
+    <!-- ✅ Buttons FIRST -->
+      <div class="action-buttons">
+    <button id="exportPdfBtn" class="btn btn-outline">📄 Download PDF</button>
+    <button id="resetBtn" class="btn btn-danger">♻ Reset</button>
+  </div>
 
-     
+
+  <!-- ✅ Then your grid -->
        <div class="main-grid">  
         
           <div class="left-box">
@@ -142,13 +144,17 @@ Visually indicates whether your savings are good, average, or poor based on inco
                 <p id="dateError" class="error"></p>
 
                 <label class="label">Category</label>
-                <select id="expenseCategory" class="input">
-                   <option value="">Select Type</option>
-                   <option value="Expense">Expense</option>
-                   <option value="Income">Income</option>
-                </select>
+<select id="expenseCategory" class="input">
+   <option value="">Select Category</option>
+   <option value="Income">Income</option>
+   <option value="Food">Food</option>
+   <option value="Travel">Travel</option>
+   <option value="Bills">Bills</option>
+   <option value="Shopping">Shopping</option>
+   <option value="Other">Other</option>
+</select>
                 <p id="categoryError" class="error"></p>
-                <button id="AddExpenseButton" class="btn btn-primary">➕ Add Expense</button>
+                <button type="button" id="AddExpenseButton" class="btn btn-primary"> ➕ Add Expense</button>
               
            </form>
            
@@ -194,14 +200,40 @@ Visually indicates whether your savings are good, average, or poor based on inco
 
              
 
-      </div> 
-                   <p id="savingsAnalysis">Savings: ₹ 0</p>
-             <p id="highestExpenseAnalysis">Highest Expense: ₹ 0</p>
-             <p id="dailyAverageAnalysis">Daily Avg: ₹ 0</p>
-             <p id="monthlyCompare">Monthly comparison will appear here</p>
+</div> <!-- right-box -->
 
-        </div>
-       <script src="MoneyMate.js"></script>
+<p id="savingsAnalysis">Savings: ₹ 0</p>
+<p id="highestExpenseAnalysis">Highest Expense: ₹ 0</p>
+<p id="dailyAverageAnalysis">Daily Avg: ₹ 0</p>
+
+
+     </div>
+     </section> 
+     <div class="charts-container">
+
+<section id="calculate">
+
+<!-- Chart BELOW calculate section -->
+<div class="charts-wrapper">
+
+  <!-- Financial Overview -->
+  <div class="chart-section">
+    <h2>📊 Financial Overview</h2>
+    <div class="chart-container">
+      <canvas id="financeChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Category Breakdown -->
+  <div class="chart-section">
+    <h2>📊 Category Breakdown</h2>
+    <div class="chart-container">
+      <canvas id="categoryChart"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+</div>
     </section>
     <section id="contact">
     <div class="contact-container container">
