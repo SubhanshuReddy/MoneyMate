@@ -24,8 +24,6 @@ let nameError = document.getElementById("nameError");
 let amountError = document.getElementById("amountError");
 let dateError = document.getElementById("dateError");
 let categoryError = document.getElementById("categoryError");
-
-
 // Expense Name Validation
 nameInput.addEventListener("blur", function () {
     if (nameInput.value === "") {
@@ -54,7 +52,14 @@ dateInput.addEventListener("blur", function () {
         dateError.textContent = "";
     }
 });
-
+const categoryIcons = {
+  Income: "💰",
+  Food: "🍔",
+  Travel: "✈️",
+  Bills: "📄",
+  Shopping: "🛍️",
+  Other: "📦"
+};
 
 // Category Validation
 categoryInput.addEventListener("blur", function () {
@@ -195,6 +200,7 @@ function displayExpenses(filter=""){
             continue;
         }
         
+        
         let containerEle = document.createElement("div"); 
         if (item.category ==="Income"){
             containerEle.classList.add("item-box-green")
@@ -207,7 +213,15 @@ function displayExpenses(filter=""){
         
 
         let textEle = document.createElement('p')
-        textEle.textContent = `${item.name} - ₹${item.amount} (${item.category}) - ${item.date}`; 
+        let icon = categoryIcons[item.category] || "📌";
+
+        textEle.innerHTML = `
+        <span class="icon">${icon}</span>
+        ${item.name} 
+        <span class="category-badge">${item.category}</span>
+        - ₹${item.amount} 
+        <small>(${item.date})</small>
+        `;
         
         //Call the edit function
         let editButton = document.createElement("button");
@@ -232,20 +246,17 @@ function displayExpenses(filter=""){
         delButton.addEventListener("click",function(){
             deleteExpenses(item.id);
         })  
-
-       
        //Append all the values in respective mother node
         rowConteiner.appendChild(textEle);
         rowConteiner.appendChild(editButton);
         rowConteiner.appendChild(delButton); 
         containerEle.appendChild(rowConteiner);
-        
-        expenseContainer.appendChild(containerEle); 
-       
-         
+        expenseContainer.appendChild(containerEle);
     }
     updateTotal();
 } 
+addButton.textContent = editingId ? "✅ Update Expense" : "➕ Add Expense"; 
+       
 //deleteExpenses function
 function deleteExpenses(id){
     let newList = [] 
@@ -273,20 +284,6 @@ window.addEventListener("scroll", function () {
     }
 });
 
-
-
-  // Set current year automatically
-  function newDate() {
-    return new Date().getFullYear();
-  }
-
-  const autoDate = document.getElementById("autodate");
-  if (autoDate) {
-    autoDate.innerHTML = newDate();
-  }
-
-;
-//
 function updateAnalysis(totalIncome, totalExpense) {
     const savings = totalIncome - totalExpense;
 
@@ -309,7 +306,7 @@ function findHighestExpense() {
     let expenseName = "";
 
     for (let item of expenseList) {
-        if (item.category === "Expense" && item.amount > maxExpense) {
+        if (item.category !== "Income" && item.amount > maxExpense) {
             maxExpense = item.amount;
             expenseName = item.name;
         }
@@ -358,11 +355,17 @@ function renderChart(totalIncome, totalExpense) {
         type: "doughnut",
         data: {
             labels: ["Income", "Expense"],
-            datasets: [{
-                data: [totalIncome, totalExpense],
-                backgroundColor: ["#16a34a", "#dc2626"],
-                borderWidth: 1
-            }]
+datasets: [{
+    data: [totalIncome, totalExpense],
+
+    backgroundColor: [
+        "rgba(34,197,94,0.9)",   // green
+        "rgba(239,68,68,0.9)"    // red
+    ],
+
+    borderWidth: 0,
+    hoverOffset: 12
+}]
         },
         options: {
             responsive: true,
@@ -389,9 +392,9 @@ function updateTotal(){
 
     let balance = totalIncome-totalExpense;
 
-    totalBalanceValue.textContent="Balance: ₹ "+balance;
-    totalIncomeValue.textContent="Income: ₹ "  +totalIncome
-    totalAmountValue.textContent = "Expenses: ₹ " + totalExpense;
+    totalBalanceValue.textContent = "₹ " + balance;
+    totalIncomeValue.textContent = "₹ " + totalIncome;
+    totalAmountValue.textContent = "₹ " + totalExpense;
 
 updateAnalysis(totalIncome, totalExpense);
 renderChart(totalIncome, totalExpense);
@@ -404,7 +407,7 @@ function renderCategoryChart() {
 
     for (let item of expenseList) {
         if (item.category !== "Income") {
-            let category = item.category.trim(); // ✅ fix spacing issues
+            let category = item.category.trim();
 
             if (!categoryMap[category]) {
                 categoryMap[category] = 0;
@@ -414,7 +417,6 @@ function renderCategoryChart() {
         }
     }
 
-    console.log(categoryMap); // 👈 DEBUG
 
     const labels = Object.keys(categoryMap);
     const data = Object.values(categoryMap);
@@ -429,14 +431,16 @@ function renderCategoryChart() {
             labels: labels,
             datasets: [{
                 data: data,
-                backgroundColor: [
-                    "#ef4444",
-                    "#f59e0b",
-                    "#10b981",
-                    "#3b82f6",
-                    "#8b5cf6",
-                    "#ec4899"
-                ]
+backgroundColor: [
+    "#6366f1",
+    "#f59e0b",
+    "#10b981",
+    "#ef4444",
+    "#3b82f6",
+    "#ec4899"
+],
+borderWidth: 0,
+hoverOffset: 10
             }]
         },
         
@@ -446,10 +450,11 @@ options: {
         legend: {
             position: "bottom",
             labels: {
+                padding: 18,
+                usePointStyle: true,
                 font: {
-                    size: 26   // 🔥 increase this (try 14–18)
-                },
-                padding: 20
+                    size: 13
+                }
             }
         }
     }
@@ -457,14 +462,3 @@ options: {
 
     });
 }
-function filterByMonth(month) {
-    return expenseList.filter(item => item.date.startsWith(month));
-}
-if (totalExpense > budget) {
-    alert("⚠ Budget exceeded!");
-}
-formValue.addEventListener("keypress", function(e){
-    if (e.key === "Enter") {
-        addButton.click();
-    }
-});
