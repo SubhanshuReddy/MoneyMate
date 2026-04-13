@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="MoneyMate1.js" defer></script>
 </head>
@@ -27,97 +26,122 @@
             <li><a href="#about">About</a></li>
             <li><a href="#features">Features</a></li>
             <li><a href="#calculate">Calculate</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#contact">Feedback</a></li>
         </ul>
         <h1 class="logo">MoneyMate</h1>
     </div>
 </nav>
-    <section class="showcase-area" id="showcase">
-    <div class="showcase-container">
-        <h1 class="main-title" id="home">Money Mate</h1>
-        <p>“Track expenses. Understand spending. Improve savings.”</p>
-        <a href="#about" class="btn btn-primary">get started</a>
+<section class="showcase-area" id="showcase">
+  <div class="hero-container">
+
+    <!-- LEFT CONTENT -->
+    <div class="hero-text">
+      <h1>Take Control of Your <span>Money</span></h1>
+
+      <p>
+        Track expenses, analyze spending, and grow your savings —
+        all in one powerful and simple dashboard.
+      </p>
+      <p class="trust-text">✔ No login required • ✔ 100% Private • ✔ Free to use</p>
+      <div class="hero-buttons">
+        <a href="#calculate" class="btn btn-primary">🚀 Start Tracking</a>
+        <a href="#about" class="btn btn-outline">Learn More</a>
+        
+      </div>
     </div>
-    </section>
 
 
-  <section id="about" class="about-section">
-    <div class="container">
+
+  </div>
+</section>
+
 
       <!-- Header -->
-      <div class="section-header">
-        <h1>
-        Personal Finance Manager
-        </h1>
-        <p>
-This Expense Tracker helps users record, analyze, and manage their income and expenses in real time. It provides clear financial insights such as savings analysis, daily averages, and monthly comparisons, all while keeping data private and stored locally in the browser.
-        </p>
+<section class="about-section" id="about">
+  <div class="about-container">
+
+    <!-- LEFT TEXT -->
+    <div class="about-text">
+
+      <p class="about-tag">💡 ABOUT MONEYMATE</p>
+
+      <h1>Manage Your Money Smarter</h1>
+
+      <p class="about-desc">
+        MoneyMate helps you track your expenses, understand your spending habits,
+        and make better financial decisions — all in a simple and distraction-free interface.
+      </p>
+
+      <!-- Highlights -->
+      <div class="about-highlights">
+        <div>✔ Track income & expenses easily</div>
+        <div>✔ Visualize spending with charts</div>
+        <div>✔ Get smart financial insights</div>
       </div>
-    </section>
-    <section id="features"class="features-section">
-      <!-- Feature Grid -->
-      <div class="features-grid">
 
-        
-        <!-- Left Column -->
-        <div class="column">
-          <div class="feature-card">
-            <h3>📊 Smart Expense Tracking</h3>
-            <p>Easily add, edit, and delete income or expenses with category and date support. All records are saved securely in your browser.
-          </div>
+      <!-- CTA -->
+      <a href="#calculate" class="btn btn-primary">Start Managing →</a>
 
-          <div class="feature-card">
-            <h3>💰 Real-Time Balance Calculation</h3>
-            <p>Automatically calculates Total Income, Total Expenses, and Current Balance as soon as data is updated.
-          </div>
-        </div>
-        <div class="column">
-          <div class="feature-card">
-            <h3>🔍 Instant Search & Sorting</h3>
-            <p>
-Quickly search expenses by name or category and sort them by date or amount for better analysis.
-          </div>
-
-          <div class="feature-card">
-            <h3>📅 Daily Average Spending</h3>
-            <p>
-Shows your average daily expense, helping you control unnecessary spending habits.
-          </div>
-        </div>
-
-         <!-- Right Column -->
-        <div class="column">
-          <div class="feature-card">
-            <h3>💾 Persistent Data Storage</h3>
-            <p>
-All data is stored using Local Storage, so your expenses remain saved even after page refresh.
-          </div>
-
-          <div class="feature-card">
-            <h3>📈 Monthly Spending Comparison</h3>
-            <p>Compare current month expenses with the previous month to track spending increase or decrease trends.
-          </div>
-        </div>
-<div class="column">
-          <div class="feature-card">
-            <h3>📄 Export Expense Report </h3>
-            <p>
-Download your expense summary as a PDF report for offline use or sharing.
-          </div>
-
-          <div class="feature-card">
-            <h3>🧠 Savings Analysis Indicator</h3>
-            <p>
-Visually indicates whether your savings are good, average, or poor based on income-to-expense ratio.
-          </div>
-        </div>
-
-       
-
-      </div>
     </div>
-  </section>
+
+    <!-- RIGHT IMAGE -->
+    <div class="about-image">
+      <img src="https://th.bing.com/th/id/OIP.m2R-UGydkrwwQYJgSMVqxAHaE5?w=222&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3" alt="Finance Dashboard">
+    </div>
+
+  </div>
+</section>
+
+
+<section class="features-section">
+  <div class="features-container">
+
+    <!-- Card 1 -->
+    <div class="feature-card glass">
+      <div class="icon">📊</div>
+      <h3>Smart Tracking</h3>
+      <p>Track income and expenses with categories and dates in a clean, simple flow.</p>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="feature-card glass">
+      <div class="icon">💰</div>
+      <h3>Real-Time Balance</h3>
+      <p>Instantly see your income, expenses, and balance update as you add data.</p>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="feature-card glass">
+      <div class="icon">🔍</div>
+      <h3>Search & Sort</h3>
+      <p>Quickly filter and organize transactions by name, category, date, or amount.</p>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="feature-card glass">
+      <div class="icon">📈</div>
+      <h3>Visual Analytics</h3>
+      <p>Interactive charts display income vs expenses and category-wise spending. </p>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="feature-card glass">
+      <div class="icon">📄</div>
+      <h3>Export Reports</h3>
+      <p>Download your financial summary as a clean PDF in one click.</p>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="feature-card glass">
+      <div class="icon">🧠</div>
+      <h3>Smart Insights</h3>
+      <p>Get savings analysis, daily averages, and spending intelligence.</p>
+    </div>
+
+  </div>
+</section>
     <!-- ✅ Buttons FIRST -->
+     <section id="calculate"></section>
       <div class="action-buttons">
     <button id="exportPdfBtn" class="btn btn-outline">📄 Download PDF</button>
     <button id="resetBtn" class="btn btn-danger">♻ Reset</button>
@@ -132,11 +156,11 @@ Visually indicates whether your savings are good, average, or poor based on inco
             <h2>Expense Tracker</h2>
            <form id="formValue">  
                 <label>Expense Name</label> 
-                <input type="text" id="expenseName" class="input"/> 
+                <input type="text" placeholder="e.g. Food, Salary..." id="expenseName" class="input"/> 
                 <p id="nameError" class="error"></p>
 
                 <label class="label">Amount</label>
-                <input type="number" id="expenseAmount" class="input"/>  
+                <input type="number" placeholder="₹ Enter amount" id="expenseAmount" class="input"/>  
                 <p id="amountError" class="error"></p>
 
                 <label class="label">Date</label>
@@ -146,11 +170,11 @@ Visually indicates whether your savings are good, average, or poor based on inco
                 <label class="label">Category</label>
 <select id="expenseCategory" class="input">
    <option value="">Select Category</option>
-   <option value="Income">Income</option>
-   <option value="Food">Food</option>
-   <option value="Travel">Travel</option>
-   <option value="Bills">Bills</option>
-   <option value="Shopping">Shopping</option>
+   <option value="Income">💰Income</option>
+   <option value="Food">🍔 Food</option>
+   <option value="Travel">✈️ Travel</option>
+   <option value="Shopping">🛍️ Shopping</option>
+   <option value="Bills">📄Bills</option>
    <option value="Other">Other</option>
 </select>
                 <p id="categoryError" class="error"></p>
@@ -161,24 +185,39 @@ Visually indicates whether your savings are good, average, or poor based on inco
            
              
          </div> 
-           <div class="search-box">
-               
-                <label >Search Expenses</label>
-               <input type="search" id="searchInput" class="search_input" placeholder="Type name or category...">
-               
-               
-           </div>
+<div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input 
+        type="search" 
+        id="searchInput" 
+        class="search_input" 
+        placeholder="Search by name or category..."
+    >
+</div>
         
         </div>
         <div class="right-box">
           <div id="exportSection">
               <div class="summary-box">
-              <h1>Summary</h1>
-            <div class="row-alignment">
-               <h4 id="totalExpense" class="amount-red">Expenses: ₹ 0</h4>
-               <h4 id="totalBalance" class="amount-black">Balance: ₹ 0</h4>
-               <h4 id="totalIncome" class="amount-green">Income: ₹ 0</h4>
-            </div>
+              <h2>📊 Financial Summary</h2>
+ <div class="dashboard-cards">
+
+  <div class="card expense-card">
+    <p>💸 Expenses</p>
+    <h2 id="totalExpense">₹ 0</h2>
+  </div>
+
+  <div class="card balance-card">
+    <p>🏦 Balance</p>
+    <h2 id="totalBalance">₹ 0</h2>
+  </div>
+
+  <div class="card income-card">
+    <p>💰 Income</p>
+    <h2 id="totalIncome">₹ 0</h2>
+  </div>
+
+</div>
           </div>
           <select id="sortSelect" class="input">
            <option value="">Sort By</option>
@@ -207,11 +246,15 @@ Visually indicates whether your savings are good, average, or poor based on inco
 <p id="dailyAverageAnalysis">Daily Avg: ₹ 0</p>
 
 
+
      </div>
      </section> 
      <div class="charts-container">
+      <h2 style="text-align:center; margin-top:40px;">
+  📈 Financial Insights
+</h2>
 
-<section id="calculate">
+
 
 <!-- Chart BELOW calculate section -->
 <div class="charts-wrapper">
@@ -237,11 +280,25 @@ Visually indicates whether your savings are good, average, or poor based on inco
     </section>
     <section id="contact">
     <div class="contact-container container">
-        <div class="form-container">
-        <h2>Contact Us</h2>
-        <textarea cols="30" rows="6"></textarea>
-        <a href="#" class="btn btn-primary">Submit</a>
-        </div>
+<div class="form-container">
+<h2>💬 Feedback</h2>
+<p class="feedback-subtext">We’d love to hear your thoughts and suggestions!</p>
+
+  <input type="text" placeholder="Your Name (optional)" />
+<select class="input">
+  <option value="">Select Feedback Type</option>
+  <option>Bug Report 🐞</option>
+  <option>Suggestion 💡</option>
+  <option>Feature Request 🚀</option>
+</select>
+  <textarea 
+    cols="30" 
+    rows="6" 
+    placeholder="Write your feedback here...">
+  </textarea>
+
+  <button class="btn btn-primary">🚀 Submit Feedback</button>
+</div>
     </div>
   </section>
   <footer id="footer">
